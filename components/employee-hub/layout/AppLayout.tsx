@@ -1,12 +1,13 @@
+"use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { 
-  LayoutDashboard, 
-  Users, 
-  Calendar, 
-  FileText, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Users,
+  Calendar,
+  FileText,
+  Settings,
   Bell,
   Search,
   MessageSquare
@@ -20,11 +21,13 @@ export function Sidebar() {
   const { user } = useAuth();
   const displayUser = user ? { ...CURRENT_USER, name: user.name } : CURRENT_USER;
 
+  const navItems = [
     { icon: LayoutDashboard, label: "Feed", href: "/" },
     { icon: Users, label: "Equipo", href: "/team" },
     { icon: Calendar, label: "Calendario", href: "/calendar" }, // Placeholder for future feature
     { icon: FileText, label: "Documentos", href: "/documents" },
     { icon: MessageSquare, label: "Mensajes", href: "/messages" },
+  ];
 
   return (
     <div className="h-screen w-64 border-r bg-sidebar flex flex-col fixed left-0 top-0 z-30">
@@ -40,14 +43,14 @@ export function Sidebar() {
       <div className="flex-1 py-6 px-4 space-y-1">
         <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-2 mb-2">Menú</div>
         {navItems.map((item) => {
-          const isActive = item.href === '/' ? false : pathname === item.href; 
+          const isActive = item.href === '/' ? false : pathname === item.href;
           return (
             <Link key={item.href} href={item.href}>
               <div
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer",
-                  isActive 
-                    ? "bg-primary/10 text-primary" 
+                  isActive
+                    ? "bg-primary/10 text-primary"
                     : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                 )}
               >
@@ -104,5 +107,19 @@ export function Header() {
         </button>
       </div>
     </header>
+  );
+}
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-h-screen w-full">
+      <Sidebar />
+      <div className="flex-1 flex flex-col ml-64">
+        <Header />
+        <main className="flex-1 bg-background">
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }

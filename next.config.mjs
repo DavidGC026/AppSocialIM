@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  // La app se servirá bajo https://dvguzman.com/calendario
-  //basePath: "/calendario",
-  //assetPrefix: "/calendario",
+  // La app se servirá bajo https://dvguzman.com/AppSocial
+  basePath: "/AppSocial",
+  assetPrefix: "/AppSocial",
+  trailingSlash: true,
   images: {
     remotePatterns: [
       {
